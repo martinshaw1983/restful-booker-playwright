@@ -36,7 +36,6 @@ jobs:
         BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
 
     - name: Get Allure history
-      flows: checkout
       uses: actions/checkout@v4
       if: always()
       with:
