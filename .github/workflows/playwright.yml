@@ -78,13 +78,25 @@ jobs:
         to: mr.mp.shaw.1983@gmail.com 
         from: Playwright Automation Bot <mr.mp.shaw.1983@gmail.com>
         secure: true
-        body: |
-          body: |
+        - name: Send Email Notification
+      uses: dawidd6/action-send-mail@v4
+      if: always()
+      with:
+        server_address: ${{ secrets.SMTP_SERVER }}
+        server_port: ${{ secrets.SMTP_PORT }}
+        username: ${{ secrets.SMTP_USERNAME }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: 'Playwright API Test Run: ${{ job.status }}'
+        to: yourname@gmail.com # Keep your real Gmail address here
+        from: Playwright Automation Bot <yourname@gmail.com>
+        secure: true
+        content_type: text/html
+        html_body: |
           <p>Playwright API Test Suite execution completed with status: <strong>${{ job.status }}</strong></p>
           
           <p>You can view the full interactive dashboard here: 
-          <a href="https://martinshaw1983.github.io/restful-booker-playwright/allure-action/add-ability-to-view-allure-report-in-GitHub/self-test/${{ github.run_id }}__${{ github.run_number }}/">
+          <a href="https://martinshaw1983.github.io/restful-booker-playwright/allure-action/${{ github.head_ref || github.ref_name }}/self-test/${{ github.run_id }}__${{ github.run_number }}/">
             View Allure Test Report
           </a></p>
           
-          <p>Triggered by commit: ${{ github.sha }} on branch ${{ github.ref_name }}.</p>
+          <p>Triggered by commit: ${{ github.sha }} on branch ${{ github.head_ref || github.ref_name }}.</p>
