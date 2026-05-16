@@ -3,6 +3,11 @@ import { DateTime } from 'luxon';
 
 export class BookingFactory {
 
+        // Create date in correct format
+    static formatRelativeDate(isoString: string, daysOffset: number): string {
+        return DateTime.fromISO(isoString).plus({ days: daysOffset }).toFormat('yyyy-MM-dd');
+    }
+
     // The standard valid payload
     static createValidPayload() {
         const amenities = [
@@ -12,6 +17,8 @@ export class BookingFactory {
             'Parking',
             'Gym Access',
             'Wi-Fi'];
+        
+        const currentIsoString = DateTime.now().toISO()!;
 
         return {
             firstname: faker.person.firstName(),
@@ -19,8 +26,8 @@ export class BookingFactory {
             totalprice: faker.number.int({ min: 100, max: 5000 }),
             depositpaid: faker.datatype.boolean(),
             bookingdates: {
-                checkin: DateTime.now().toFormat('yyyy-MM-dd'),
-                checkout: DateTime.now().plus({ day: 5 }).toFormat('yyyy-MM-dd')
+                checkin: this.formatRelativeDate(currentIsoString, 0),
+                checkout: this.formatRelativeDate(currentIsoString, 5)
             },
             additionalneeds: faker.helpers.arrayElement(amenities)
         };

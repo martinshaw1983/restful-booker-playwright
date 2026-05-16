@@ -25,6 +25,12 @@ export class BookingController {
         return await this.request.get(`/booking/${bookingId}`);
     }
 
+    async getBookingIdsByDate(start: string, end: string): Promise<number[]> {
+        const response = await this.getBookingByDate(start, end);
+        const body = await response.json();
+        return body.map((b: { bookingid: number }) => b.bookingid);
+    }
+
     async getBookingByName(firstName: string, lastName: string) {
         return await this.request.get('/booking', {
             params: { firstname: firstName, lastname: lastName }
@@ -35,10 +41,6 @@ export class BookingController {
         return await this.request.get('/booking', {
             params: { checkin: checkIn, checkout: CheckOut }
         });
-    }
-
-    async getAllBookingIds() {
-        return await this.request.get('/booking');
     }
 
     async login(payload: any, options: any = {}) {
