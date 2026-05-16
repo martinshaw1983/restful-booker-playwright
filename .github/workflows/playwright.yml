@@ -42,7 +42,8 @@ jobs:
 
     # This single step completely replaces all three old plugins
     - name: Generate and Deploy Allure Report
-      uses: mgrybyk-org/allure-report-gh-pages-action@v2
+      uses: mgrybyk/allure-report-gh-pages-action@v2.0.1
+      
       if: always()
       with:
         allure_results: allure-results
