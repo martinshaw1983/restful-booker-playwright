@@ -75,8 +75,8 @@ jobs:
         username: ${{ secrets.SMTP_USERNAME }}
         password: ${{ secrets.SMTP_PASSWORD }}
         subject: 'Playwright API Test Run: ${{ job.status }}'
-        to: yourname@gmail.com # Keep your real Gmail address here
-        from: Playwright Automation Bot <yourname@gmail.com>
+        to: mr.mp.shaw.1983@gmail.com 
+        from: Playwright Automation Bot <mr.mp.shaw.1983@gmail.com>
         secure: true
         content_type: text/html
         html_body: |
