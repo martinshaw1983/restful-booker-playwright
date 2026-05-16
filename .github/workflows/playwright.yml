@@ -7,6 +7,11 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
     timeout-minutes: 60
@@ -34,11 +39,29 @@ jobs:
         BASE_URL: ${{ secrets.BASE_URL }}
         BOOKING_USER: ${{ secrets.BOOKING_USER }}
         BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
-
-    - name: Upload Allure Results Artifact
+    
+    - name: Checkout gh-pages
+      uses: actions/checkout@v4
       if: always()
-      uses: actions/upload-artifact@v4
+      continue-on-error: true
       with:
-        name: allure-results
-        path: allure-results/
-        retention-days: 30
+        ref: gh-pages
+        path: gh-pages-dir
+
+    - name: Allure Report Action
+      uses: mgrybyk-org/allure-report-branch-action@v1
+      if: always()
+      continue-on-error: true
+      id: allure
+      with:
+        report_id: 'self-test'
+        gh_pages: 'gh-pages-dir'
+        report_dir: 'allure-results'
+
+    - name: Git Commit and Push Action
+      uses: mgrybyk-org/git-commit-pull-push-action@v1
+      if: always()
+      with:
+        repository: gh-pages-dir
+        branch: gh-pages
+        pull_args: --rebase -X ours
