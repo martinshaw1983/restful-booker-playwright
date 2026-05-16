@@ -65,3 +65,26 @@ jobs:
         repository: gh-pages-dir
         branch: gh-pages
         pull_args: --rebase -X ours
+    
+    - name: Send Email Notification
+      uses: dawidd6/action-send-mail@v4
+      if: always()
+      with:
+        server_address: ${{ secrets.SMTP_SERVER }}
+        server_port: ${{ secrets.SMTP_PORT }}
+        username: ${{ secrets.SMTP_USERNAME }}
+        password: ${{ secrets.SMTP_PASSWORD }}
+        subject: 'Playwright API Test Run: ${{ job.status }}'
+        to: mr.mp.shaw.1983@gmail.com 
+        from: Playwright Automation Bot <mr.mp.shaw.1983@gmail.com>
+        secure: true
+        content_type: text/html
+        html_body: |
+          <p>Playwright API Test Suite execution completed with status: <strong>${{ job.status }}</strong></p>
+          
+          <p>You can view the full interactive dashboard here: 
+          <a href="${{ steps.allure.outputs.report_url }}">
+            View Allure Test Report
+          </a></p>
+          
+          <p>Triggered by commit from: <strong>${{ steps.commit_details.outputs.author }}</strong> (GitHub user: ${{ github.actor }}) on branch ${{ github.head_ref || github.ref_name }}.</p>
