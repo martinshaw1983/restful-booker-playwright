@@ -39,13 +39,29 @@ jobs:
         BASE_URL: ${{ secrets.BASE_URL }}
         BOOKING_USER: ${{ secrets.BOOKING_USER }}
         BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
+    
+    - name: Checkout gh-pages
+      uses: actions/checkout@v4
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages-dir
 
-    # This single step completely replaces all three old plugins
-    - name: Generate and Deploy Allure Report
-      uses: mgrybyk/allure-report-gh-pages-action@v2.0.1
-      
+    - name: Allure Report Action
+      uses: mgrybyk-org/allure-report-branch-action@v1
+      if: always()
+      continue-on-error: true
+      id: allure
+      with:
+        report_id: 'self-test'
+        gh_pages: 'gh-pages-dir'
+        report_dir: 'allure-results'
+
+    - name: Git Commit and Push Action
+      uses: mgrybyk-org/git-commit-pull-push-action@v1
       if: always()
       with:
-        allure_results: allure-results
-        allure_history: allure-history
-        keep_reports: 20
+        repository: gh-pages-dir
+        branch: gh-pages
+        pull_args: --rebase -X ours
