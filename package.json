@@ -1,0 +1,30 @@
+{
+  "name": "pwdemos",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "test": "node clean-reports.js && npx playwright test",
+  "report:generate": "allure generate allure-results --clean -o allure-report",
+  "report:open": "allure open allure-report"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@playwright/test": "^1.59.1",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^25.6.0",
+    "allure-playwright": "^3.7.1",
+    "dotenv": "^17.4.2"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "allure-commandline": "^2.38.1",
+    "csv-parse": "^6.2.1",
+    "luxon": "^3.7.2",
+    "xlsx": "^0.18.5"
+  }
+}
