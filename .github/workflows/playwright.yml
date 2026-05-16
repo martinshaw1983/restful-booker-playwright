@@ -79,9 +79,12 @@ jobs:
         from: Playwright Automation Bot <mr.mp.shaw.1983@gmail.com>
         secure: true
         body: |
-          Playwright API Test Suite execution completed with status: ${{ job.status }}
+          body: |
+          <p>Playwright API Test Suite execution completed with status: <strong>${{ job.status }}</strong></p>
           
-          You can view the full interactive Allure dashboard here:
-          https://martinshaw1983.github.io/restful-booker-playwright/
+          <p>You can view the full interactive dashboard here: 
+          <a href="https://martinshaw1983.github.io/restful-booker-playwright/allure-action/add-ability-to-view-allure-report-in-GitHub/self-test/${{ github.run_id }}__${{ github.run_number }}/">
+            View Allure Test Report
+          </a></p>
           
-          Triggered by commit: ${{ github.sha }} on branch ${{ github.ref_name }}.
+          <p>Triggered by commit: ${{ github.sha }} on branch ${{ github.ref_name }}.</p>
