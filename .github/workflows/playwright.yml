@@ -75,18 +75,6 @@ jobs:
         username: ${{ secrets.SMTP_USERNAME }}
         password: ${{ secrets.SMTP_PASSWORD }}
         subject: 'Playwright API Test Run: ${{ job.status }}'
-        to: mr.mp.shaw.1983@gmail.com 
-        from: Playwright Automation Bot <mr.mp.shaw.1983@gmail.com>
-        secure: true
-        - name: Send Email Notification
-      uses: dawidd6/action-send-mail@v4
-      if: always()
-      with:
-        server_address: ${{ secrets.SMTP_SERVER }}
-        server_port: ${{ secrets.SMTP_PORT }}
-        username: ${{ secrets.SMTP_USERNAME }}
-        password: ${{ secrets.SMTP_PASSWORD }}
-        subject: 'Playwright API Test Run: ${{ job.status }}'
         to: yourname@gmail.com # Keep your real Gmail address here
         from: Playwright Automation Bot <yourname@gmail.com>
         secure: true
