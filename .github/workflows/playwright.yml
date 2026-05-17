@@ -87,4 +87,4 @@ jobs:
             View Allure Test Report
           </a></p>
           
-          <p>Triggered by commit from: <strong>${{ steps.commit_details.outputs.author }}</strong> (GitHub user: ${{ github.actor }}) on branch ${{ github.head_ref || github.ref_name }}.</p>
+          <p>Triggered by event: <strong>${{ github.event_name }}</strong> by <strong>${{ github.actor }}</strong> on branch ${{ github.head_ref || github.ref_name }}.</p>
