@@ -21,7 +21,6 @@ export default defineConfig({
   projects: [
     {
       name: 'API-tests',
-      use: { ...devices['Desktop Chrome'] },
       fullyParallel: true,
     }
   ],
