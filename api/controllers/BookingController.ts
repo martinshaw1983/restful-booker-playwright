@@ -66,6 +66,7 @@ export class BookingController {
             data: payload,
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Cookie': `token=${token}`,
                 ...options.headers
             },
@@ -79,6 +80,7 @@ export class BookingController {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': `token=${token}`,
+                'Accept': 'application/json',
                 ...options.headers
             },
             ...options
