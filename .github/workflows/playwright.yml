@@ -80,7 +80,7 @@ jobs:
         secure: true
         content_type: text/html
         html_body: |
-          <p>Playwright API Test Suite execution completed with status: <strong>${{ job.status }}</strong></p>
+          <p>Playwright API test suite execution completed with status: <strong>${{ job.status }}</strong></p>
           
           <p>You can view the full interactive dashboard here: 
           <a href="${{ steps.allure.outputs.report_url }}">
