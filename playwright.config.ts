@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  workers: 5,
+  workers: process.env.CI ? 2 : undefined,
   
   reporter: [
     ['allure-playwright', { outputFolder: 'allure-results' }]
