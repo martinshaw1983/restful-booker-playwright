@@ -6,9 +6,9 @@ import { validateBookingData } from '../../api/utils/bookingAssertions';
 
 test.describe('Update Booking - Positive', () => {
 
-    test('Update entire booking with valid auth token', async ({ bookingController, bookingDetails }) => {
+    test('Update entire booking with valid auth token', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId = bookingDetails.bookingid;
-        const authToken = await bookingController.getAuthToken();
+        const authToken = await bookingController.getAuthToken(apiAuthConfg.username, apiAuthConfg.validPassword);
 
         const updateEntireBookingRequestBody = BookingFactory.createValidPayload();
         const updateBookingResponse = await bookingController.entireBookingUpdate(
@@ -21,9 +21,9 @@ test.describe('Update Booking - Positive', () => {
         validateBookingData(updateBookingResponseBody, updateEntireBookingRequestBody);
     });
 
-    test('Update name in booking with valid auth token', async ({ bookingController, bookingDetails }) => {
+    test('Update name in booking with valid auth token', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId = bookingDetails.bookingid;
-        const authToken = await bookingController.getAuthToken();
+        const authToken = await bookingController.getAuthToken(apiAuthConfg.username, apiAuthConfg.validPassword);
         const updateBookingNameRequestBody = BookingFactory.createPayloadWithNameOnly();
         const currentBookingResponse = await bookingController.getBookingById(bookingId);
         const currentBookingResponseBody = await currentBookingResponse.json();
@@ -40,21 +40,19 @@ test.describe('Update Booking - Positive', () => {
 });
 test.describe('Update of Booking - Negative', () => {
 
-    test('Should return 403 when updating entire booking with invalid auth token', async ({ bookingController, bookingDetails }) => {
+    test('Should return 403 when updating entire booking with invalid auth token', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId = bookingDetails.bookingid;
         const updateEntireBookingRequestBody = BookingFactory.createValidPayload();
         const updateEntireBookingResponseInvalidToken = await bookingController.entireBookingUpdate(
-            bookingId, updateEntireBookingRequestBody, BookingController.INVALID_TOKEN
+            bookingId, updateEntireBookingRequestBody, apiAuthConfg.invalidToken
         );
 
         expect(updateEntireBookingResponseInvalidToken.status()).toBe(403);
     });
 
-    test('Should return 400 when sending a malformed payload when updating entire booking', async (
-        { bookingController, bookingDetails }
-    ) => {
+    test('Should return 400 when sending a malformed payload when updating entire booking', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId = bookingDetails.bookingid;
-        const authToken = await bookingController.getAuthToken();
+        const authToken = await bookingController.getAuthToken(apiAuthConfg. username, apiAuthConfg.validPassword);
         const updateEntireBookingMalformedPalyoadRequestBody: any = `{
         "firstname" : "Jim5",
         "lastname" : "Brown5",
@@ -83,11 +81,9 @@ test.describe('Update of Booking - Negative', () => {
         expect(updateBookingNameResponseInvalidToken.status()).toBe(403);
     });
 
-    test('Should return 400 when sending a malformed payload when updating name in booking', async (
-        { bookingController, bookingDetails }
-    ) => {
+    test('Should return 400 when sending a malformed payload when updating name in booking', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId = bookingDetails.bookingid;
-        const authToken = await bookingController.getAuthToken();
+        const authToken = await bookingController.getAuthToken(apiAuthConfg.username, apiAuthConfg.validPassword);
         const updateBookingNameMalformedPalyoadRequestBody: any = `{
         "firstname" : "Jim5",
         "lastname" : "Brown5",

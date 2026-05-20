@@ -54,8 +54,8 @@ export class BookingController {
         });
     }
 
-    async getAuthToken() {
-        const payload = BookingFactory.createValidLoginPayload();
+    async getAuthToken(username: string, password: string) {
+        const payload = BookingFactory.createLoginPayload(username, password);
         const response = await this.login(payload);
         const body = await response.json();
         return body.token;

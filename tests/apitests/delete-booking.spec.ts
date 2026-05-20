@@ -3,9 +3,9 @@ import { BookingController } from '../../api/controllers/BookingController';
 
 test.describe('Delete Booking - Positive', () => {
 
-    test('Should delete a booking with a valid auth token', async ({ bookingController, bookingDetails }) => {
+    test('Should delete a booking with a valid auth token', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId: number = bookingDetails.bookingid;
-        const authToken = await bookingController.getAuthToken();
+        const authToken = await bookingController.getAuthToken(apiAuthConfg.username, apiAuthConfg.validPassword);
         const deleteResponse = await bookingController.deleteBooking(bookingId, authToken);
         const searchBookingIdResponse = await bookingController.getBookingById(bookingId);
 
@@ -16,9 +16,9 @@ test.describe('Delete Booking - Positive', () => {
 
 test.describe('Delete Booking - Negative', () => {
 
-    test('Should not delete a booking with a invalid auth token', async ({ bookingController, bookingDetails }) => {
+    test('Should not delete a booking with a invalid auth token', async ({ bookingController, bookingDetails, apiAuthConfg }) => {
         const bookingId: number = bookingDetails.bookingid;
-        const deleteResponse = await bookingController.deleteBooking(bookingId, BookingController.INVALID_TOKEN);
+        const deleteResponse = await bookingController.deleteBooking(bookingId, apiAuthConfg.invalidToken);
         const searchBookingIdResponse = await bookingController.getBookingById(bookingId);
         const searchBookingIdResponseBody = await searchBookingIdResponse.json();
 
