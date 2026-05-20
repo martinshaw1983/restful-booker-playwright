@@ -39,6 +39,8 @@ jobs:
         BASE_URL: ${{ secrets.BASE_URL }}
         BOOKING_USER: ${{ secrets.BOOKING_USER }}
         BOOKING_PASSWORD: ${{ secrets.BOOKING_PASSWORD }}
+        INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
+        INVALID_TOKE: ${{ secrets.INVALID_TOKEN }}
     
     - name: Checkout gh-pages
       uses: actions/checkout@v4

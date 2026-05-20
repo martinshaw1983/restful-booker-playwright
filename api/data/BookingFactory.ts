@@ -63,18 +63,10 @@ export class BookingFactory {
     }
 
     // A payload with valid login credentails
-    static createValidLoginPayload() {
+    static createLoginPayload(user: string, password: string) {
         return {
-            "username": process.env.BOOKING_USER,
-            "password": process.env.BOOKING_PASSWORD
-        }
-    }
-
-    // A payload with invalid login credentials
-    static createInvalidLoginPayload() {
-        return {
-            "username": process.env.BOOKING_USER,
-            "password": 'invalidPassword'
+            "username": user,
+            "password": password
         }
     }
 }
